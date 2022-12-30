@@ -1,4 +1,4 @@
-﻿namespace SGuard.Option;
+﻿namespace SGuard;
 
 /// <summary>
 /// Represents a callback option that can be used to specify a callback action to be invoked when a condition is not met.
@@ -11,7 +11,7 @@ public class CallbackOption
     /// <summary>
     /// Gets or sets a value indicating whether the callback should be invoked when a null value is encountered.
     /// </summary>
-    public bool IsNullThrowFailure { get; set; }
+    public bool InvokeCallbackWhenNullOrEmpty { get; set; }
 
     /// <summary>
     /// Sets the callback action to be invoked without a parameter.
@@ -20,7 +20,6 @@ public class CallbackOption
     public void SetCallback(Action? callback)
     {
         _callbackWithoutParameter = callback;
-        IsNullThrowFailure = true;
     }
 
     /// <summary>
@@ -30,7 +29,6 @@ public class CallbackOption
     public void SetCallback(Action<string>? callback)
     {
         _callbackWithParameter = callback;
-        IsNullThrowFailure = true;
     }
 
     /// <summary>

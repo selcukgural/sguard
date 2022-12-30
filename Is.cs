@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using SGuard.Option;
 using SGuard.Visitor;
 
 namespace SGuard;
@@ -426,7 +425,7 @@ public partial class Is
     /// <param name="isOption">An optional callback option object.</param>
     private static void InvokeCallbacks(CallbackOption? isOption)
     {
-        if (isOption is {IsNullThrowFailure: true})
+        if (isOption is {InvokeCallbackWhenNullOrEmpty: true})
         {
             isOption.InvokeCallback();
             return;

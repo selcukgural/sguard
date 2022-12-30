@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using SGuard.Exceptions;
-using SGuard.Option;
 
 namespace SGuard;
 
@@ -19,7 +18,10 @@ public partial class Is
     {
         AllNullThrow(new AllNullException("All element are null"), true, param);
     }
-
+    public static void AllNullThrow(IEnumerable<object?>? param, string message, [DoesNotReturnIf(true)] bool condition = true)
+    {
+        AllNullThrow(new AllNullException(message), true, param);
+    }
     /// <summary>
     /// Throws a given exception if all elements in the given enumerable are null.
     /// </summary>
@@ -44,7 +46,20 @@ public partial class Is
 
         throw exception;
     }
+    public static void AllNullThrow(string message, [DoesNotReturnIf(true)] bool condition = true, params object?[]? param)
+    {
+        if (param == null)
+        {
+            throw new ArgumentNullException(nameof(param));
+        }
 
+        if (param.Any(e => e != null))
+        {
+            return;
+        }
+
+        throw new AllNullException(message);
+    }
     /// <summary>
     /// Throws an <see cref="IsNullOrEmptyException"/> if the given value is null or empty.
     /// </summary>
@@ -66,7 +81,7 @@ public partial class Is
             return;
         }
 
-        if (!opt.IsNullThrowFailure && opt.HasCallback())
+        if (!opt.InvokeCallbackWhenNullOrEmpty && opt.HasCallback())
         {
             opt.InvokeCallback();
 
@@ -114,7 +129,7 @@ public partial class Is
         var opt = new CallbackOption();
         option?.Invoke(opt);
 
-        if (!opt.IsNullThrowFailure && opt.HasCallback())
+        if (!opt.InvokeCallbackWhenNullOrEmpty && opt.HasCallback())
         {
             opt.InvokeCallback();
 
