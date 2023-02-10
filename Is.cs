@@ -10,7 +10,8 @@ public partial class Is
     private static readonly NullVisitor NullVisitor = new();
     private static Action? _globalCallback;
     private static Action<string?>? _globalCallback2;
-
+    private bool _test;
+    public static void Test(){}
     /// <summary>
     /// Sets a global callback action to be invoked when a nullity or emptiness check is performed.
     /// </summary>
