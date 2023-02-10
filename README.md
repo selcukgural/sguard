@@ -12,6 +12,9 @@ The `Is` class in the SGuard library provides a range of methods for validating 
 `dotnet tool install --global SGuard --version 1.0.0`
 
 # Usage samples
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/381c27d9f6c54fe1890f1919d4bd8b14)](https://app.codacy.com/gh/selcukgural/sguard?utm_source=github.com&utm_medium=referral&utm_content=selcukgural/sguard&utm_campaign=Badge_Grade_Settings)
+
 ## NullOrEmpty : `boolean`
 This method is a generic extension method that checks whether a nullable value type is null or empty. It has two parameters:
 
