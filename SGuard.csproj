@@ -4,24 +4,17 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <PackageVersion>1.0</PackageVersion>
+	  <PackageVersion>1.1</PackageVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackAsTool>True</PackAsTool>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
     <PackageProjectUrl>https://github.com/selcukgural/sguard</PackageProjectUrl>
-    <PackageIcon>sguard-logo.png</PackageIcon>
+    <PackageIcon></PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/selcukgural/sguard</RepositoryUrl>
     <PackageTags>Guard;Validation;Is;DoesNotReturn;IsNullOrEmpty;IsNullOrEmptyThrow</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\..\..\Downloads\sguard-logo.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <None Update="LICENSE">

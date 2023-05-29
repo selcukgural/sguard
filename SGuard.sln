@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGuard", "SGuard.csproj", "{0595A77E-F1FF-4232-8472-B0FCE329D9D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGuard.Test", "..\SGuard.Test\SGuard.Test.csproj", "{A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{0595A77E-F1FF-4232-8472-B0FCE329D9D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0595A77E-F1FF-4232-8472-B0FCE329D9D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0595A77E-F1FF-4232-8472-B0FCE329D9D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
