@@ -18,7 +18,7 @@ This method is a generic extension method that checks whether a nullable value t
 * `T? value`: This is a nullable value type that will be checked for null or empty.
 * `Action<CallbackOption>? option`: This is an optional parameter of type `Action<CallbackOption>` that represents a callback function that takes a `CallbackOption` object as an argument.
 
-```c sharp
+```csharp
 //NullOrEmpty
 var testString1 = "hello";
 var testString2 = "";
@@ -36,7 +36,7 @@ Console.WriteLine(Is.NullOrEmpty(testArray2)); //True
 <br/>
 
 * With global callback only triggered when it's `false`
-```c sharp
+```csharp
 // Set the global callback action
 Is.SetCallback(() => Console.WriteLine("A null or empty check was performed."));
 
@@ -53,7 +53,7 @@ Console.WriteLine(Is.NullOrEmpty(testString2));
 <br/>
 
 * With optional callback
-```c sharp
+```csharp
 // Check if a string is null or empty
 var testString1 = "hello";
 var testString2 = "";
@@ -68,7 +68,7 @@ Console.WriteLine(Is.NullOrEmpty(testString2));
 <br/>
 
 * With conditional optional callback
-```c sharp
+```csharp
 const string testString = "";
 
 // Output: This method will be called.
@@ -87,7 +87,7 @@ Is.NullOrEmpty(testString, option =>
 <br/>
 
 * With `Expression`
-```c sharp
+```csharp
 public class Car
 {
     public string Brand { get; set; }
@@ -103,7 +103,7 @@ Is.NullOrEmpty(car, e => e.Brand);
 ## NullOrEmptyThrow : `void`
 This method just like `NullOrEmpty` main difference is when value null or empty it's will be throw `IsNullOrEmptyException`
 
-```c sharp
+```csharp
 // Throwing IsNullOrEmptyException
 var emptyString = "";
 Is.NullOrEmptyThrow(emptyString); 
