@@ -7,9 +7,9 @@ In addition to the callback pattern, the SGuard library also makes use of the `D
 
 The `Is` class in the SGuard library provides a range of methods for validating values. Some of these methods include:
 
-[Nuget](https://www.nuget.org/packages/SGuard/1.0.0)
+[Nuget](https://www.nuget.org/packages/SGuard/1.1.1)
 
-`dotnet tool install --global SGuard --version 1.0.0`
+`dotnet tool install --global SGuard --version 1.1.1`
 
 # Usage samples
 ## NullOrEmpty : `boolean`
