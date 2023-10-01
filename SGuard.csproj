@@ -1,19 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <PackageVersion>1.1</PackageVersion>
+	  <PackageVersion>1.2</PackageVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackAsTool>True</PackAsTool>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <AssemblyVersion>1.2</AssemblyVersion>
     <PackageProjectUrl>https://github.com/selcukgural/sguard</PackageProjectUrl>
-    <PackageIcon></PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/selcukgural/sguard</RepositoryUrl>
     <PackageTags>Guard;Validation;Is;DoesNotReturn;IsNullOrEmpty;IsNullOrEmptyThrow</PackageTags>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

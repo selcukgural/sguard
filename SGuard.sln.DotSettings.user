@@ -1,9 +1,10 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f5940efc_002D8023_002D4ab3_002Dac81_002Df96d577d46c8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Is_AllNull" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9::net7.0::SGuard.Test.AllNull&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9::net7.0::SGuard.Test.Between&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9::net7.0::SGuard.Test.GreaterThan&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9::net7.0::SGuard.Test.NullOrEmpty&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/Users/selcuk/Library/Caches/JetBrains/Rider2023.2/resharper-host/temp/Rider/vAny/CoverageData/_SGuard.1507006633/Snapshot/snapshot.utdcvr</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f5940efc_002D8023_002D4ab3_002Dac81_002Df96d577d46c8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Is_AllNull" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9::net7.0::SGuard.Test.AllNull&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9::net7.0::SGuard.Test.Between&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9::net7.0::SGuard.Test.GreaterThan&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::A7DE3FF5-F06F-408B-B6F5-4BC529AFE7A9::net7.0::SGuard.Test.NullOrEmpty&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
