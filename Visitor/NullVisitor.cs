@@ -5,7 +5,7 @@ namespace SGuard.Visitor;
 /// <summary>
 /// An internal class that visits member and unary expressions to check for null values.
 /// </summary>
-internal class NullVisitor : ExpressionVisitor
+internal sealed class NullVisitor : ExpressionVisitor
 {
     /// <summary>
     /// Visits a member expression to check if it is null or has a default value.

@@ -6,7 +6,7 @@ namespace SGuard.Exceptions;
 /// The exception that is thrown when all the objects in an array are null.
 /// </summary>
 [Serializable]
-public class IsGreaterThanException : Exception
+public sealed class IsGreaterThanException : Exception
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="IsGreaterThanException"/> class.
