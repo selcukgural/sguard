@@ -5,7 +5,7 @@ using SGuard.Visitor;
 
 namespace SGuard;
 
-public partial class Is
+public sealed partial class Is
 {
     private static readonly NullVisitor NullVisitor = new();
     private static Action? _globalCallback;
@@ -43,7 +43,7 @@ public partial class Is
     /// <param name="value">The object to check.</param>
     /// <param name="isOption">An optional action to perform before checking for nullity or emptiness.</param>
     /// <returns>True if the object is null or empty, false otherwise.</returns>
-    internal static bool NullOrEmpty<T>(T? value, CallbackOption? isOption = null)
+    private static bool NullOrEmpty<T>(T? value, CallbackOption? isOption = null)
     {
         if (value == null)
         {
@@ -233,7 +233,7 @@ public partial class Is
                 var valueType = value.GetType();
                 var properties = valueType.GetProperties();
 
-                if (((valueType.IsValueType && !valueType.IsEnum) ||  valueType.IsClass) && properties.Any(e=> e.CanRead))
+                if ((valueType is { IsValueType: true, IsEnum: false } ||  valueType.IsClass) && properties.Any(e=> e.CanRead))
                 {
                     return properties.Where(e => e.CanRead).Select(property => property.GetValue(value)?.ToString()).All(string.IsNullOrEmpty);
                 }
@@ -263,7 +263,7 @@ public partial class Is
     /// <param name="value">The property of the object to check for nullity or emptiness.</param>
     /// <param name="option">An optional action to perform before checking for nullity or emptiness.</param>
     /// <returns>True if the object is null or empty, false otherwise.</returns>
-    internal static bool NullOrEmpty<T>(T? obj, Expression<Func<T, object>>? value, CallbackOption? option = null)
+    private static bool NullOrEmpty<T>(T? obj, Expression<Func<T, object>>? value, CallbackOption? option = null)
     {
         if (obj == null)
         {

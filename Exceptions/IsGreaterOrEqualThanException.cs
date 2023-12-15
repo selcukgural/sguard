@@ -6,7 +6,7 @@ namespace SGuard.Exceptions;
 /// The exception that is thrown when all the objects in an array are null.
 /// </summary>
 [Serializable]
-public class IsGreaterOrEqualThanException : Exception
+public sealed class IsGreaterOrEqualThanException : Exception
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="IsGreaterOrEqualThanException"/> class.
@@ -34,7 +34,7 @@ public class IsGreaterOrEqualThanException : Exception
     /// </summary>
     /// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
     /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
-    protected IsGreaterOrEqualThanException(
+    internal IsGreaterOrEqualThanException(
         SerializationInfo info,
         StreamingContext context) : base(info, context)
     {
