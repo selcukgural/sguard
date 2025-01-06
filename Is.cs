@@ -53,193 +53,134 @@ public sealed partial class Is
 
         switch (value)
         {
-            case string:
-                if (!string.IsNullOrEmpty(value.ToString()) && value.ToString()?.Length > 0)
+            case string str:
+                if (!string.IsNullOrEmpty(str))
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case char chr:
                 if (chr != default)
                 {
                     return false;
                 }
+                break;
 
-                InvokeCallbacks(isOption);
-                return true;
-
-            case byte
-                or sbyte
-                or ushort
-                or int
-                or uint
-                or long
-                or ulong
-                or float
-                or double
-                or decimal:
-
-                if (decimal.TryParse(value.ToString(), out var dec) && dec != 0)
+            case byte or sbyte or ushort or int or uint or long or ulong or float or double or decimal:
+                if (Convert.ToDecimal(value) != 0)
                 {
                     return false;
                 }
+                break;
 
-                InvokeCallbacks(isOption);
-                return true;
-
-            case bool:
-                if (value.ToString() == "True")
+            case bool boolVal:
+                if (boolVal)
                 {
                     return false;
                 }
+                break;
 
-                InvokeCallbacks(isOption);
-                return true;
-
-            case Guid:
-
-                if (Guid.TryParse(value.ToString(), out var guid) && guid != Guid.Empty)
+            case Guid guid:
+                if (guid != Guid.Empty)
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case IDictionary dictionary:
                 if (dictionary.Count != 0)
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case DateTime datetime:
                 if (datetime.Ticks != 0)
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case TimeSpan timespan:
                 if (timespan.Ticks != TimeSpan.MinValue.Ticks)
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case DateOnly dateOnly:
                 if (dateOnly != default)
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case TimeOnly timeOnly:
                 if (timeOnly != default)
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case DateTimeOffset dateTimeOffset:
                 if (dateTimeOffset != default)
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case IEnumerable<T> enumerable:
-                var enumerable1 = enumerable.ToList();
-                if (enumerable1.Any())
+                if (enumerable.Cast<object?>().Any(item => item != null))
                 {
-                    if (enumerable1.Cast<object?>().Any(item => item != null))
-                    {
-                        return false;
-                    }
-
-                    InvokeCallbacks(isOption);
-                    return true;
+                    return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case Array array:
-                if (array.Length != 0)
+                if (array.Cast<object?>().Any(item => item != null))
                 {
-                    if (array.Cast<object?>().Any(item => item != null))
-                    {
-                        return false;
-                    }
-
-                    InvokeCallbacks(isOption);
-                    return true;
+                    return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case IList list:
-                if (list.Count != 0)
+                if (list.Cast<object?>().Any(item => item != null))
                 {
-                    if (list.Cast<object?>().Any(item => item != null))
-                    {
-                        return false;
-                    }
-
-                    InvokeCallbacks(isOption);
-                    return true;
+                    return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             case Type:
                 return false;
 
             case IEnumerable list:
-                var objArray = list as object[] ?? list.Cast<object>().ToArray();
-                if (objArray.Length == 0)
-                {
-                    InvokeCallbacks(isOption);
-                    return true;
-                }
-
-                if (objArray.Cast<object?>().Any(item => item != null))
+                if (list.Cast<object?>().Any(item => item != null))
                 {
                     return false;
                 }
-
-                InvokeCallbacks(isOption);
-                return true;
+                break;
 
             default:
-
                 var valueType = value.GetType();
                 var properties = valueType.GetProperties();
 
-                if ((valueType is { IsValueType: true, IsEnum: false } ||  valueType.IsClass) && properties.Any(e=> e.CanRead))
+                if (valueType is { IsValueType: true, IsEnum: false } || valueType.IsClass)
                 {
-                    return properties.Where(e => e.CanRead).Select(property => property.GetValue(value)?.ToString()).All(string.IsNullOrEmpty);
+                    if (properties.Any(e => e.CanRead && !string.IsNullOrEmpty(e.GetValue(value)?.ToString())))
+                    {
+                        return false;
+                    }
                 }
-
-                throw new InvalidOperationException();
+                else
+                {
+                    throw new InvalidOperationException();
+                }
+                break;
         }
+
+        InvokeCallbacks(isOption);
+        return true;
     }
     /// <summary>
     /// Determines if the given object is null or empty.

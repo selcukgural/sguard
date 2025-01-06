@@ -6,7 +6,7 @@
 	  <PackageVersion>1.2</PackageVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackAsTool>True</PackAsTool>
-    <AssemblyVersion>1.2</AssemblyVersion>
+    <AssemblyVersion>1.2.1</AssemblyVersion>
     <PackageProjectUrl>https://github.com/selcukgural/sguard</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>

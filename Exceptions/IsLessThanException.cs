@@ -34,7 +34,7 @@ public sealed class IsLessThanException : Exception
     /// </summary>
     /// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
     /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about the source or destination.</param>
-    protected IsLessThanException(
+    internal IsLessThanException(
         SerializationInfo info,
         StreamingContext context) : base(info, context)
     {

@@ -14,7 +14,7 @@ internal sealed class NullVisitor : ExpressionVisitor
     /// <returns>A constant expression with a null value if the expression is null or has a default value, otherwise the original expression.</returns>
     protected override Expression VisitMember(MemberExpression node)
     {
-        MemberExpression memberAccessExpression = (MemberExpression)base.VisitMember(node);
+        var memberAccessExpression = (MemberExpression)base.VisitMember(node);
         
         if (memberAccessExpression.Expression == null)
         {
