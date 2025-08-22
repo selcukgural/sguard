@@ -1,148 +1,237 @@
+<h1>
+  <img src="icon.png" alt="SGuard" width="55" height="55" style="vertical-align:middle; margin-right:0">SGuard
+</h1>
 
-The **SGuard** library is a collection of tools for validating values and throwing exceptions if they do not meet certain conditions. It is designed to help developers ensure that their code is working as intended and that input values are valid, which can help prevent errors and exceptions from occurring in production environments.
+`SGuard` is a lightweight guard library for .NET that lets you express preconditions clearly and reliably.  
+Use Is.* for boolean checks and ThrowIf.* for throwing guards when conditions are met.  
+The GuardCallback/GuardOutcome model brings explicit feedback semantics, and CallerArgumentExpression enriches exception messages with call-site expressions.
 
-One of the key features of SGuard is its use of the callback pattern, which allows developers to specify custom error messages for the exceptions that are thrown if validation fails. This can help developers provide more helpful and specific error messages to their users.
+<strong>Highlights</strong>
+- **Consistent API:** Is.* (bool) and ThrowIf.* (throw) follow the same outcome rule
+- **Clear feedback:** GuardCallback(GuardOutcome) — explicit Success / Failure
+- **Diagnostics-friendly:** exceptions include call-site expressions and actual values
+- **Practical NullOrEmpty:** string, collections, arrays, nullable, common value types
+- **Production-ready:** input validation, finally-based callbacks, comprehensive tests
 
-In addition to the callback pattern, the SGuard library also makes use of the `DoesNotReturn` attribute, which is applied to certain methods in the `Throw` class. This attribute indicates that the method does not return a value, and is used to mark methods that throw exceptions as "does not return" in the C# language. **This can be helpful for static analysis tools and other code analysis tools that can use this information to ensure that code is working as intended.**
+<strong>Outcome rules</strong>
+- `Is.*`: true ⇒ Success, false ⇒ Failure
+- `Is.NullOrEmpty`: true (null/empty) ⇒ Failure, false ⇒ Success
+- `ThrowIf.*`: condition met (throws) ⇒ Failure, not met ⇒ Success
 
-The `Is` class in the SGuard library provides a range of methods for validating values. Some of these methods include:
+<strong>Note (Breaking Changes)</strong>  
+This release redesigns the callback API with GuardCallback/GuardOutcome and standardizes naming (e.g., GreaterThanOrEqualException).
 
-[Nuget](https://www.nuget.org/packages/SGuard/1.1.1)
 
-`dotnet tool install --global SGuard --version 1.1.1`
+## Quick Start
+Install from NuGet (example package id; adjust to your actual PackageId):
+- dotnet add package SGuard
 
-# Usage samples
-## NullOrEmpty : `boolean`
-This method is a generic extension method that checks whether a nullable value type is null or empty. It has two parameters:
-
-* `T? value`: This is a nullable value type that will be checked for null or empty.
-* `Action<CallbackOption>? option`: This is an optional parameter of type `Action<CallbackOption>` that represents a callback function that takes a `CallbackOption` object as an argument.
+Basic usage:
 
 ```csharp
-//NullOrEmpty
-var testString1 = "hello";
-var testString2 = "";
+using SGuard;
 
-Console.WriteLine(Is.NullOrEmpty(testString1)); //False
-Console.WriteLine(Is.NullOrEmpty(testString2)); //True
-
-
-var testArray1 = new[] { 1, 2, 3 };
-var testArray2 = Array.Empty<int>();
-
-Console.WriteLine(Is.NullOrEmpty(testArray1)); //False
-Console.WriteLine(Is.NullOrEmpty(testArray2)); //True
-```
-<br/>
-
-* With global callback only triggered when it's `false`
-```csharp
-// Set the global callback action
-Is.SetCallback(() => Console.WriteLine("A null or empty check was performed."));
-
-// Check if a string is null or empty
-var testString1 = "hello";
-var testString2 = "";
-
-Console.WriteLine(Is.NullOrEmpty(testString1));
-// Output: False
-//         A null or empty check was performed.
-Console.WriteLine(Is.NullOrEmpty(testString2));
-// Output: True
-```
-<br/>
-
-* With optional callback
-```csharp
-// Check if a string is null or empty
-var testString1 = "hello";
-var testString2 = "";
-                                                        // We can do what you want instead of printing it to the console.
-Console.WriteLine(Is.NullOrEmpty(testString1, option => Console.WriteLine("A null or empty check was performed.")));
-// A null or empty check was performed.
-// Output: False
-Console.WriteLine(Is.NullOrEmpty(testString2));
-// Output: True
-```
-
-<br/>
-
-* With conditional optional callback
-```csharp
-const string testString = "";
-
-// Output: This method will be called.
-Is.NullOrEmpty(testString, option =>
+// Boolean checks
+if (Is.Between(age, 18, 65))
 {
-    option.InvokeCallbackWhenNullOrEmpty = true;
-    option.SetCallback(() => Console.Write("This method will be called"));
-});
-
-Is.NullOrEmpty(testString, option =>
-{
-    option.InvokeCallbackWhenNullOrEmpty = false;
-    option.SetCallback(() => Console.Write("This method will NOT be called"));
-});
-```
-<br/>
-
-* With `Expression`
-```csharp
-public class Car
-{
-    public string Brand { get; set; }
+// ...
 }
 
-Car car = new();
+// Throwing guards
+ThrowIf.GreaterThan(order.Quantity, order.Stock);
 
- // True
-Is.NullOrEmpty(car, e => e.Brand);
+// Callback usage
+Is.GreaterThan(x, y, GuardCallbacks.OnSuccess(() => Log("x > y")));
+
+// Rich exception messages
+ThrowIf.Between(value, min, max);
+
+// throws when name is null or empty
+ThrowIf.NullOrEmpty(user.Name, GuardCallbacks.OnFailure(() => Log("name missing")));
+bool isEmpty = Is.NullOrEmpty(tags, GuardCallbacks.OnSuccess(() => Log("tags available")));
+
+// throws when quantity > stock
+ThrowIf.GreaterThan(order.Quantity, order.Stock, GuardCallbacks.OnFailure(() => Log("invalid stock")));
+
 ```
-<br/>
+---
+## Contents
+- What’s new and Breaking Changes
+- Quick Start
+- How Guards Work
+- Callback Model (GuardCallback / GuardOutcome)
+- NullOrEmpty Semantics
+- API Naming Conventions
+- Exception Messages (CallerArgumentExpression)
+- Error Handling Guarantees
+- Performance and AOT/Trimming Notes
+- Versioning and Migration Guide
+- Install
+- License and Contributing
 
-## NullOrEmptyThrow : `void`
-This method just like `NullOrEmpty` main difference is when value null or empty it's will be throw `IsNullOrEmptyException`
+---
+## What’s new and Breaking Changes
+This release introduces a redesigned callback API and naming consistency improvements. These are breaking changes.
+Must-read breaking changes:
+1. Callback redesign
+
+- Old: Callback with OnFailure/OnSuccess and internal InvokeCallback(bool)
+- New: GuardCallback delegate receiving GuardOutcome (Success/Failure)
+- Helpers: GuardCallbacks.OnSuccess(Action), GuardCallbacks.OnFailure(Action)
+- All Is.* and ThrowIf.* signatures changed from Callback? to GuardCallback?
+
+2. Outcome semantics are explicit and unified
+
+- Is.*: result == true -> Success, result == false -> Failure
+- Is.NullOrEmpty: true (empty) -> Failure, false -> Success
+- ThrowIf.*: condition met (exception thrown) -> Failure, condition not met -> Success
+
+3. Exception naming consistency
+
+- GreaterOrEqualThanException has been renamed to GreaterThanOrEqualException
+- Throw/ThrowIf methods are aligned with exception names
+
+4. Exception messages enhanced
+
+- Exceptions now capture real call-site expressions with CallerArgumentExpression and embed them in Message and Exception.Data
+
+5. Possible behavioral differences for NullOrEmpty
+
+- Complex types that are non-null and have no readable properties are NOT considered empty
+- See “`NullOrEmpty` Semantics” for details and caveats
+
+If you are upgrading from older versions, read the Migration Guide below carefully.
+
+---
+
+## How Guards Work
+- `Is.*` methods return bool and optionally invoke a callback with the evaluation outcome.
+- `ThrowIf.*` methods throw an exception when the specified condition is met; otherwise, they return normally. They also optionally invoke a callback with the evaluation outcome.
+
+Outcome rule:
+- Is.*: true => Success, false => Failure
+- Is.NullOrEmpty: true (null or empty) => Failure, false => Success
+- ThrowIf.*: condition met (throw) => Failure, no throw => Success
+
+---
+
+## Callback Model (GuardCallback / GuardOutcome)
+New, explicit, and simple callback system.
+- GuardOutcome enum: Success | Failure
+- GuardCallback delegate: public delegate void GuardCallback(GuardOutcome outcome);
+- Helpers:
+    - GuardCallbacks.OnSuccess(Action action)
+    - GuardCallbacks.OnFailure(Action action)
+
+Examples:
 
 ```csharp
-// Throwing IsNullOrEmptyException
-var emptyString = "";
-Is.NullOrEmptyThrow(emptyString); 
+// Success callback when Is.* returns true
+Is.GreaterThan(10, 5, GuardCallbacks.OnSuccess(() => Console.WriteLine("ok")));
 
-// Throwing IsNullOrEmptyException
-Car car = new();
-Is.NullOrEmptyThrow(car, e => e.Brand); 
+// Failure callback when Is.* returns false
+Is.LessThan(2, 1, GuardCallbacks.OnFailure(() => Console.WriteLine("failed")));
 
-// Throwing IsNullOrEmptyException
-var emptyArray = Array.Empty<int>();
-Is.NullOrEmptyThrow(emptyArray);
-
-//traditional method
-Car car = new();
-if (string.IsNullOrEmpty(car.Brand))
-{
-    throw new ArgumentNullException(nameof(car));
-}
-
-// I can do that much simple like that
-Is.NullOrEmptyThrow(car, e => e.Brand);
-
-// Another sample with callback
-Is.NullOrEmptyThrow(car, e=> e.Brand, _ => throw new DomainSpecificException("...."));
+// ThrowIf.*: exception path is Failure, non-exception path is Success
+ThrowIf.GreaterThan(5, 1, GuardCallbacks.OnFailure(() => Console.WriteLine("will throw before this line")));
 ```
-<br/>
+
+Why this is better:
+- Explicit semantics, no inversions/hacks
+- Same outcome rules across Is.* and ThrowIf.*
+
+Policy on callback exceptions:
+- If your callback throws, that exception will propagate. Documented behavior by design. Keep callback code safe.
+
+---
+## Outcome Summary Table
+- Is.GreaterThan / Is.LessThan / Is.Between: result true => Success; result false => Failure
+- Is.NullOrEmpty: result true (is null or empty) => Failure; result false => Success
+- ThrowIf.* guards: condition met (throw) => Failure; condition not met => Success
+
+---
+
+## NullOrEmpty Semantics
+Explicit rules:
+- string: null or string.Empty => empty (Failure)
+- Array: Length == 0 => empty
+- ICollection/IReadOnlyCollection/IDictionary/IReadOnlyDictionary: Count == 0 => empty
+- IEnumerable (no Count): treated as empty if it yields no elements. Note: single-use enumerables might be consumed for the check; document usage accordingly
+- Nullable: HasValue == false => empty
+- Non-null complex types:
+    - Objects without readable properties are NOT considered empty
+    - Generally, if it’s a plain reference type and not null, it’s NOT empty
+
+- Value types like numeric, bool, Guid, DateTime follow “empty” conventions used internally (e.g., zero, Guid.Empty, ticks == 0, min value, etc.)
+
+Caveat:
+- For IEnumerable without Count, checking emptiness may consume the sequence. Avoid passing single-use iterators if you need to iterate afterward.
+
+---
+
+## API Naming Conventions
+We standardized comparison exception names and Throw methods to match:
+- GreaterThanException
+- GreaterThanOrEqualException
+- LessThanException
+- LessThanOrEqualException
+- BetweenException
+
+Ensure your code references the new GreaterThanOrEqualException (previously named GreaterOrEqualThanException).
+
+---
+## Exception Messages (CallerArgumentExpression)
+All guard exceptions (e.g., BetweenException, GreaterThanException, LessThanException, GreaterThanOrEqualException, NullOrEmptyException) embed call-site expressions and actual values:
+- Message includes expressions (e.g., "value", "min", "user.Age", "limit + 5") and actual runtime values
+- Exception.Data includes keys like valueExpr, minExpr, leftExpr, rightExpr, etc.
+
+This makes diagnostics significantly easier.
+
+---
+## Error Handling Guarantees
+- All guards validate inputs and will throw ArgumentNullException when necessary.
+- Callbacks are invoked in finally blocks to ensure execution regardless of early returns.
+- If a callback throws, that exception will propagate (documented behavior)
 
 
--   `IsNull`: Validates that a nullable value is not null.
--   `IsBetween`: Validates that a value is within a certain range.
--   `IsGreaterThan`: Validates that a value is greater than another value.
--   `IsGreaterOrEqualThan`: Validates that a value is greater than or equal to another value.
--   `IsLessThan`: Validates that a value is less than another value.
--   `IsLessOrEqualThan`: Validates that a value is less than or equal to another value.
+---
+## Performance and AOT/Trimming Notes
+- Reflection and Expression.Compile are used in some NullOrEmpty scenarios (e.g., expression-based selection).
+- Recommend testing with trimming/AOT if your application uses NativeAOT or aggressive linkers.
+- If needed, mark dynamic parts with suitable attributes or document APIs as “not AOT-safe”.
 
-In addition to these methods, the SGuard library also provides the following utility methods:
+Performance tips:
+- Prefer collections with Count/Length for O(1) checks.
+- Avoid passing single-use IEnumerable to NullOrEmpty if you need to iterate after checks.
 
--   `NullOrEmpty`: Determines whether a nullable value is null or empty.
--   `AllNull`: Determines whether all elements in a collection are null or empty.
--   `AnyNull`: Determines whether any element in a collection is null or empty.
 
-Overall, the SGuard library can be a valuable tool for developers looking to improve the reliability and robustness of their code. It provides a simple and flexible way to validate values and ensure that they meet certain conditions, helping to prevent errors and exceptions from occurring in production environments. Its use of the callback pattern and the `DoesNotReturn` attribute further enhance its usefulness and make it a powerful tool for developers.
+---
+## Versioning and Migration Guide
+This release is a major version with breaking changes.
+1. Callback API
+- Old: Callback OnFailure/OnSuccess, InvokeCallback(bool)
+- New: GuardCallback(GuardOutcome), GuardCallbacks.OnSuccess/OnFailure
+- Migrate:
+    - Replace Callback with GuardCallback
+    - Replace Callback.OnSuccess(Action) with GuardCallbacks.OnSuccess(Action)
+    - Replace Callback.OnFailure(Action) with GuardCallbacks.OnFailure(Action)
+    - Outcome rules now explicit as described above
+
+2. Naming consistency
+- Replace GreaterOrEqualThanException with GreaterThanOrEqualException
+- Update any Throw.* method names accordingly (Throw.GreaterThanOrEqualException)
+
+3. NullOrEmpty behavior
+- Plain reference types without properties and non-null are NOT empty
+- If previous behavior considered such objects empty, refactor your checks
+
+4. Exception messages
+- Now richer via CallerArgumentExpression; no action required but expect different messages and Data content
+
+**Recommended upgrade steps:**
+- Update package
+- Fix compile errors around removed Callback type and renamed exception
+- Review callback site logic; use GuardCallbacks helpers
+- Re-run tests and check exception messages
+- If you rely on expression-based NullOrEmpty, verify trimming/AOT scenarios
+

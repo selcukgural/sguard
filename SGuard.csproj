@@ -3,16 +3,29 @@
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <PackageVersion>1.2</PackageVersion>
+	  <PackageVersion>2.0.0</PackageVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackAsTool>True</PackAsTool>
-    <AssemblyVersion>1.2.1</AssemblyVersion>
+    <AssemblyVersion>2.0.0</AssemblyVersion>
     <PackageProjectUrl>https://github.com/selcukgural/sguard</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/selcukgural/sguard</RepositoryUrl>
-    <PackageTags>Guard;Validation;Is;DoesNotReturn;IsNullOrEmpty;IsNullOrEmptyThrow</PackageTags>
-    <TargetFramework>net6.0</TargetFramework>
+      <PackageTags>Guard;Is;ThrowIf;Validation;Preconditions;Contracts;Exceptions;CallerArgumentExpression;dotnet;csharp</PackageTags>
+      <Description>SGuard is a lightweight guard library for .NET that offers explicit boolean checks (Is.*) and throwing guards (ThrowIf.*), a unified GuardCallback/GuardOutcome model, and richly-informative exceptions via CallerArgumentExpression for easier diagnostics. Targets net6.0/net7.0/net8.0/net9.0.
+      </Description>
+      <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <Title>SGuard</Title>
+    <Authors>Selçuk Güral</Authors>
+    <RepositoryType>git</RepositoryType>
+      <PackageReleaseNotes>
+          v1.0.0 (breaking)
+          - Redesigned callback model: GuardCallback/GuardOutcome
+          - Naming standardized: GreaterThanOrEqualException
+          - Exceptions enriched with CallerArgumentExpression (expressions in Message/Data)
+          - NullOrEmpty semantics clarified (plain non-null reference types are not empty)
+      </PackageReleaseNotes>
+      <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,10 +33,8 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+      <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
