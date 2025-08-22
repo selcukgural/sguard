@@ -1,5 +1,6 @@
-![plot](./icon.png)
-
+<div align="center">
+<img src="icon.png" alt="SGuard" width="205" height="81"/>
+</div>
 
 `SGuard` is a lightweight guard library for .NET that lets you express preconditions clearly and reliably.  
 Use Is.* for boolean checks and ThrowIf.* for throwing guards when conditions are met.  
