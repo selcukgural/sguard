@@ -3,10 +3,10 @@
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <PackageVersion>2.0.0</PackageVersion>
+	  <PackageVersion>2.0.1</PackageVersion>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackAsTool>True</PackAsTool>
-    <AssemblyVersion>2.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.1</AssemblyVersion>
     <PackageProjectUrl>https://github.com/selcukgural/sguard</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -26,6 +26,7 @@
           - NullOrEmpty semantics clarified (plain non-null reference types are not empty)
       </PackageReleaseNotes>
       <PackageIcon>icon.png</PackageIcon>
+      <FileVersion>2.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

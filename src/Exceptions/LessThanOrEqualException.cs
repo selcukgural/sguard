@@ -51,6 +51,6 @@ public sealed class LessThanOrEqualException : Exception
     /// <param name="rightExpr">The string representation of the right-hand side expression.</param>
     /// <returns>A formatted error message describing the comparison failure.</returns>
     private static string BuildMessage(object? left, object? right, string? leftExpr, string? rightExpr)
-        => $"'{leftExpr}' is less than or equal to '{rightExpr}'. Actual: left={left}, right={right}.";
+        => $"'{left}' is less than or equal to '{right}'. Actual: left={leftExpr}, right={rightExpr}.";
 
 }

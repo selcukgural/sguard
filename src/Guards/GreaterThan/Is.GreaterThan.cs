@@ -40,7 +40,34 @@ public sealed partial class Is
             callback?.Invoke(isGreater ? GuardOutcome.Success : GuardOutcome.Failure);
         }
     }
+    
+    /// <summary>
+    /// Determines whether the left string is greater than the right string using the specified StringComparison.
+    /// </summary>
+    /// <param name="lValue">The left string to compare. Must not be null.</param>
+    /// <param name="rValue">The right string to compare. Must not be null.</param>
+    /// <param name="comparison">The string comparison rule to use.</param>
+    /// <param name="callback">Optional callback invoked with the outcome.</param>
+    /// <returns>true if lValue is greater than rValue according to the comparison; otherwise, false.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if lValue or rValue is null.</exception>
+    public static bool GreaterThan(string lValue, string rValue, StringComparison comparison, SGuardCallback? callback = null)
+    {
+        var isGreater = false;
 
+        try
+        {
+            ArgumentNullException.ThrowIfNull(lValue);
+            ArgumentNullException.ThrowIfNull(rValue);
+
+            isGreater = string.Compare(lValue, rValue, comparison) > 0;
+
+            return isGreater;
+        }
+        finally
+        {
+            callback?.Invoke(isGreater ? GuardOutcome.Success : GuardOutcome.Failure);
+        }
+    }
 
     /// <summary>
     /// Determines whether the left value is greater than or equal to the right value.
@@ -70,6 +97,34 @@ public sealed partial class Is
             ArgumentNullException.ThrowIfNull(rValue);
 
             isGreaterOrEqual = lValue.CompareTo(rValue) >= 0;
+
+            return isGreaterOrEqual;
+        }
+        finally
+        {
+            callback?.Invoke(isGreaterOrEqual ? GuardOutcome.Success : GuardOutcome.Failure);
+        }
+    }
+    
+    /// <summary>
+    /// Determines whether the left string is greater than or equal to the right string using the specified StringComparison.
+    /// </summary>
+    /// <param name="lValue">The left string to compare. Must not be null.</param>
+    /// <param name="rValue">The right string to compare. Must not be null.</param>
+    /// <param name="comparison">The string comparison rule to use.</param>
+    /// <param name="callback">Optional callback invoked with the outcome.</param>
+    /// <returns>true if lValue is greater than or equal to rValue according to the comparison; otherwise, false.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if lValue or rValue is null.</exception>
+    public static bool GreaterThanOrEqual(string lValue, string rValue, StringComparison comparison, SGuardCallback? callback = null)
+    {
+        var isGreaterOrEqual = false;
+
+        try
+        {
+            ArgumentNullException.ThrowIfNull(lValue);
+            ArgumentNullException.ThrowIfNull(rValue);
+
+            isGreaterOrEqual = string.Compare(lValue, rValue, comparison) >= 0;
 
             return isGreaterOrEqual;
         }

@@ -60,6 +60,13 @@ internal sealed class NullOrEmptyVisitor : ExpressionVisitor
         }
     }
 
+    /// <summary>
+    /// Builds an expression that evaluates whether a given member access expression is null or represents an empty/default value,
+    /// based on its type and specific rules for certain types such as collections, strings, and primitives.
+    /// </summary>
+    /// <param name="memberAccess">The expression representing the member access to check.</param>
+    /// <param name="memberType">The type of the member being evaluated.</param>
+    /// <returns>An expression tree that performs the null, empty, or default value check for the specified member.</returns>
     private static Expression BuildNullOrEmptyCheckExpression(Expression memberAccess, Type memberType)
     {
         var memberAsObject = Expression.Convert(memberAccess, typeof(object));

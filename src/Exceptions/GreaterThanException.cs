@@ -49,7 +49,6 @@ public sealed class GreaterThanException : Exception
     /// <returns>A formatted string describing the "greater than" violation.</returns>
     private static string BuildMessage(object? left, object? right, string? leftExpr, string? rightExpr)
     {
-        return $"'{leftExpr}' is greater than '{rightExpr}'. Actual: left={left}, right={right}.";
+        return $"'{left}' is greater than '{right}'. Actual: left={leftExpr}, right={rightExpr}.";
     }
-
 }

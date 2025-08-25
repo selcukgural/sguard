@@ -83,4 +83,71 @@ public sealed partial class ThrowIf
             callback?.Invoke(isBetween ? GuardOutcome.Failure : GuardOutcome.Success);
         }
     }
+    
+    /// <summary>
+    /// Throws an exception if the specified string is between the provided bounds using the given StringComparison.
+    /// </summary>
+    /// <param name="value">The string value to evaluate.</param>
+    /// <param name="min">The minimum bound (inclusive).</param>
+    /// <param name="max">The maximum bound (inclusive).</param>
+    /// <param name="comparison">The string comparison rule to use.</param>
+    /// <param name="callback">Optional guard outcome callback.</param>
+    public static void Between([NotNull] string value, [NotNull] string min, [NotNull] string max,
+                               StringComparison comparison, SGuardCallback? callback = null)
+    {
+        var isBetween = false;
+
+        try
+        {
+            ArgumentNullException.ThrowIfNull(min);
+            ArgumentNullException.ThrowIfNull(max);
+            ArgumentNullException.ThrowIfNull(value);
+
+            isBetween = Is.Between(value, min, max, comparison);
+
+            if (isBetween)
+            {
+                Throw.BetweenException(value, min, max);
+            }
+        }
+        finally
+        {
+            callback?.Invoke(isBetween ? GuardOutcome.Failure : GuardOutcome.Success);
+        }
+    }
+    
+    /// <summary>
+    /// Throws the provided exception if the specified string is between the given bounds using the given StringComparison.
+    /// </summary>
+    /// <param name="value">The string value to evaluate.</param>
+    /// <param name="min">The minimum bound (inclusive).</param>
+    /// <param name="max">The maximum bound (inclusive).</param>
+    /// <param name="comparison">The string comparison rule to use.</param>
+    /// <param name="exception">The exception to throw when the condition is met.</param>
+    /// <param name="callback">Optional guard outcome callback.</param>
+    public static void Between<TException>([NotNull] string value, [NotNull] string min, [NotNull] string max,
+                                           StringComparison comparison, [NotNull] TException exception,
+                                           SGuardCallback? callback = null) where TException : Exception
+    {
+        var isBetween = false;
+
+        try
+        {
+            ArgumentNullException.ThrowIfNull(min);
+            ArgumentNullException.ThrowIfNull(max);
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(exception);
+
+            isBetween = Is.Between(value, min, max, comparison);
+
+            if (isBetween)
+            {
+                Throw.That(exception);
+            }
+        }
+        finally
+        {
+            callback?.Invoke(isBetween ? GuardOutcome.Failure : GuardOutcome.Success);
+        }
+    }
 }

@@ -47,12 +47,22 @@ public sealed class BetweenException : Exception
         Data["maxExpr"]   = maxExpr;
     }
 
+    /// <summary>
+    /// Builds a detailed error message indicating that a value is within a specified range.
+    /// </summary>
+    /// <param name="value">The actual value being evaluated.</param>
+    /// <param name="min">The lower boundary of the range.</param>
+    /// <param name="max">The upper boundary of the range.</param>
+    /// <param name="valueExpr">The expression string representing the value argument.</param>
+    /// <param name="minExpr">The expression string representing the minimum value argument.</param>
+    /// <param name="maxExpr">The expression string representing the maximum value argument.</param>
+    /// <returns>A formatted string message describing the error condition.</returns>
     private static string BuildMessage(
         object? value, object? min, object? max,
         string? valueExpr, string? minExpr, string? maxExpr)
     {
-        return $"Value '{valueExpr}' is between '{minExpr}' and '{maxExpr}'. " +
-               $"Actual: value={value}, min={min}, max={max}.";
+        return $"Value '{value}' is between '{min}' and '{max}'. " +
+               $"Actual: value={valueExpr}, min={minExpr}, max={maxExpr}.";
     }
 
 }

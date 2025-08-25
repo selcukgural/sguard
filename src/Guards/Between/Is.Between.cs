@@ -46,4 +46,36 @@ public sealed partial class Is
             callback?.Invoke(isBetween ? GuardOutcome.Success : GuardOutcome.Failure);
         }
     }
+    
+    /// <summary>
+    /// Determines whether the specified string lies within the inclusive range defined
+    /// by the provided minimum and maximum values using the given StringComparison.
+    /// </summary>
+    /// <param name="value">The string value to be checked.</param>
+    /// <param name="min">The minimum boundary (inclusive).</param>
+    /// <param name="max">The maximum boundary (inclusive).</param>
+    /// <param name="comparison">The string comparison rule to use.</param>
+    /// <param name="callback">Optional callback invoked with the outcome.</param>
+    /// <returns>true if the value is between min and max (inclusive) under the specified comparison; otherwise false.</returns>
+    public static bool Between(string value, string min, string max,
+                               StringComparison comparison, SGuardCallback? callback = null)
+    {
+        var isBetween = false;
+
+        try
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullException.ThrowIfNull(min);
+            ArgumentNullException.ThrowIfNull(max);
+
+            isBetween = string.Compare(value, min, comparison) >= 0
+                        && string.Compare(value, max, comparison) <= 0;
+
+            return isBetween;
+        }
+        finally
+        {
+            callback?.Invoke(isBetween ? GuardOutcome.Success : GuardOutcome.Failure);
+        }
+    }
 }

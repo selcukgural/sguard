@@ -50,6 +50,6 @@ public sealed class GreaterThanOrEqualException : Exception
     /// <returns>A formatted error message string describing the violation.</returns>
     private static string BuildMessage(object? left, object? right, string? leftExpr, string? rightExpr)
     {
-        return $"'{leftExpr}' is greater than or equal to '{rightExpr}'. Actual: left={left}, right={right}.";
+        return $"'{left}' is greater than or equal to '{right}'. Actual: left={leftExpr}, right={rightExpr}.";
     }
 }

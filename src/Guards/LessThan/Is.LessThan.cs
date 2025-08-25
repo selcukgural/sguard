@@ -37,6 +37,35 @@ public sealed partial class Is
             callback?.Invoke(isLessThan ? GuardOutcome.Success : GuardOutcome.Failure);
         }
     }
+    
+    /// <summary>
+    /// Determines whether the left string is less than the right string using the specified StringComparison.
+    /// </summary>
+    /// <param name="lValue">The left string to compare. Must not be null.</param>
+    /// <param name="rValue">The right string to compare. Must not be null.</param>
+    /// <param name="comparison">The string comparison rule to use.</param>
+    /// <param name="callback">Optional callback invoked with the outcome.</param>
+    /// <returns>true if lValue is less than rValue according to the comparison; otherwise, false.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if lValue or rValue is null.</exception>
+    public static bool LessThan(string lValue, string rValue, StringComparison comparison, SGuardCallback? callback = null)
+    {
+        var isLessThan = false;
+
+        try
+        {
+            ArgumentNullException.ThrowIfNull(lValue);
+            ArgumentNullException.ThrowIfNull(rValue);
+
+            isLessThan = string.Compare(lValue, rValue, comparison) < 0;
+
+            return isLessThan;
+        }
+        finally
+        {
+            callback?.Invoke(isLessThan ? GuardOutcome.Success : GuardOutcome.Failure);
+        }
+    }
+
 
 
     /// <summary>
@@ -66,6 +95,34 @@ public sealed partial class Is
             ArgumentNullException.ThrowIfNull(rValue);
 
             isLessThanOrEqual = lValue.CompareTo(rValue) <= 0;
+
+            return isLessThanOrEqual;
+        }
+        finally
+        {
+            callback?.Invoke(isLessThanOrEqual ? GuardOutcome.Success : GuardOutcome.Failure);
+        }
+    }
+    
+    /// <summary>
+    /// Determines whether the left string is less than or equal to the right string using the specified StringComparison.
+    /// </summary>
+    /// <param name="lValue">The left string to compare. Must not be null.</param>
+    /// <param name="rValue">The right string to compare. Must not be null.</param>
+    /// <param name="comparison">The string comparison rule to use.</param>
+    /// <param name="callback">Optional callback invoked with the outcome.</param>
+    /// <returns>true if lValue is less than or equal to rValue according to the comparison; otherwise, false.</returns>
+    /// <exception cref="ArgumentNullException">Thrown if lValue or rValue is null.</exception>
+    public static bool LessThanOrEqual(string lValue, string rValue, StringComparison comparison, SGuardCallback? callback = null)
+    {
+        var isLessThanOrEqual = false;
+
+        try
+        {
+            ArgumentNullException.ThrowIfNull(lValue);
+            ArgumentNullException.ThrowIfNull(rValue);
+
+            isLessThanOrEqual = string.Compare(lValue, rValue, comparison) <= 0;
 
             return isLessThanOrEqual;
         }
